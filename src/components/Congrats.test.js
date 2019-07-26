@@ -1,11 +1,11 @@
 import React from 'react';
 import Enzyme,{shallow} from 'enzyme';
-//import EnzymeAdapter from 'enzyme-adapter-react-16';
+import EnzymeAdapter from 'enzyme-adapter-react-16';
 import {findByTestAttr, checkProps} from '../testUtils/testUtils'
 import checkPropTypes from 'check-prop-types'
 import Congrats from './Congrats'
 
-//Enzyme.configure({adapter: new EnzymeAdapter()}); //We dont need to write these here any more because we have put them in "setupTests.js" which runs before any test
+Enzyme.configure({adapter: new EnzymeAdapter()}); //We dont need to write these here any more because we have put them in "setupTests.js" which runs before any test
 
 const defaultProps={success:false};
 const setup=(props={})=>{

@@ -4,13 +4,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'; //for bootstrap
 
 import Congrats from './components/Congrats'
 import GuessedWords from './components/GuessedWords'
-
+import Input from './components/Input'
 
 function App() {
 
   return (
       <div className="container">
           <h1>Jotto</h1>
+
           <Congrats success={true}/>
           <GuessedWords guessedWords={[{guessedWord:'train', letterMatchCount:3 }]}/>
       </div>

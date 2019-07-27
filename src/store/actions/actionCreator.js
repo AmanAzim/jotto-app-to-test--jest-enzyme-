@@ -1,6 +1,6 @@
 import actionTypes from './actionTypeNames'
 
-export const correctGuess=(payload)=>{
+export const correctGuess=()=>{
     return {
         type:actionTypes.CORRECT_GUESS
     }

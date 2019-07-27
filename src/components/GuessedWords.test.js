@@ -24,7 +24,19 @@ test('does not throw warning with expected props', ()=>{
 
 // discribe groups several test()
 describe('if there are no words guessed', ()=>{
+    let wrapper;
+    beforeEach(()=>{//it will run before each test inside this block
+        wrapper=setup({guessedWords:[]});
+    });
 
+    test('render without error', ()=>{
+        const component=findByTestAttr(wrapper, 'component-guessed-words');
+        expect(component.length).toBe(1);
+    });
+    test('render instruction to guess a word', ()=>{
+        const instructions=findByTestAttr(wrapper, 'guess-instructions');
+        expect(instructions.text()).not.toBe(0)
+    });
 });
 
 describe('if there are words guessed', ()=>{

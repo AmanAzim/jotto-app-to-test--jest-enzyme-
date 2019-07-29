@@ -7,11 +7,13 @@ import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
 import {combineReducers, createStore, applyMiddleware} from 'redux'
 import successReducer from './store/successReducer'
+import guessWordReducer from './store/guessWordReducer'
 import ReduxThunk from 'redux-thunk'
 
 
 export const rootReducer=combineReducers({
     successReducer,
+    guessWordReducer
 });
 
 const store=createStore(rootReducer, applyMiddleware(ReduxThunk));

@@ -5,14 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import {Provider} from 'react-redux';
-import {combineReducers, createStore} from 'redux'
+import {combineReducers, createStore, applyMiddleware} from 'redux'
 import successReducer from './store/successReducer'
+import ReduxThunk from 'redux-thunk'
+
 
 export const rootReducer=combineReducers({
     successReducer,
 });
 
-const store=createStore(rootReducer);
+const store=createStore(rootReducer, applyMiddleware(ReduxThunk));
                                                                                                                     // for testing purposes
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root') || document.createElement('div'));
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'; //for bootstrap
 import {connect} from 'react-redux'
@@ -12,22 +12,28 @@ import secretWordReducer from "./store/reducers/secretWordReducer";
 
 
 
-const App=(props)=>{
-  const {success, guessedWord, secretWord, getSecretWord}=props;
+export const UnconnectedApp=(props)=>{
+  const {success, guessedWords, secretWord, getSecretWord}=props;
+
+  useEffect(()=>{
+      getSecretWord();
+  }, []);
 
   return (
       <div className="container">
           <h1>Jotto</h1>
           <Congrats success={success}/>
-          <GuessedWords guessedWords={guessedWord}/>
+          <Input />
+          <GuessedWords guessedWords={guessedWords}/>
       </div>
   );
 }
 
 const mapStateToProps=(state)=>{
+    //const {successReducer, guessWordReducer, secretWordReducer}=state;
     return {
         success:state.successReducer,
-        guessedWord:state.guessWordReducer,
+        guessedWords:state.guessWordReducer,
         secretWord:state.secretWordReducer
     }
 };
@@ -38,4 +44,4 @@ const mapDispatchToProps=(dispatch)=>{
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(UnconnectedApp);

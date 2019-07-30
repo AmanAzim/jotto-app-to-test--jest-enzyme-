@@ -86,7 +86,7 @@ describe('guess word action dispatcher', ()=>{
                   }
               ]
           };
-          const newState=store.getState();
+          const newState=store.getState()
           expect(newState).toEqual(expectedState);
       });
    });

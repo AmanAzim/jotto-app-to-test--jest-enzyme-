@@ -43,7 +43,8 @@ describe('getSecretWord action creator', ()=>{
 
     test('adds response words to state', ()=>{
         const secretWordReducer='party';
-        const store=createStore(rootReducer, secretWordReducer, applyMiddleware(ReduxThunk));
+        const initialState={secretWordReducer};
+        const store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk));
 
         //This wait() tells how to response when axios sence a request
         moxios.wait(()=>{
@@ -52,7 +53,7 @@ describe('getSecretWord action creator', ()=>{
                 status:200,
                 response:secretWordReducer
             });
-
+            //we must return this always to run the test successfully
             return store.dispatch(getSecretWord()).then(()=>{
                 const newState=store.getState();
                 expect(newState.secretWordReducer).toBe(secretWordReducer);

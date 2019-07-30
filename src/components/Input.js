@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import successReducer from "../store/reducers/successReducer";
+import {guessWord} from '../store/actions/actionCreator'
 
 class Input extends Component {
 
@@ -26,5 +27,10 @@ const mapStateToProps=(state)=>{
         success:state.successReducer
     }
 };
+const mapDispatchToProps=(dispatch)=>{
+    return {
+        guessWord:()=>dispatch(guessWord())
+    }
+};
 
-export default connect(mapStateToProps)(Input);
+export default connect(mapStateToProps, mapDispatchToProps)(Input);

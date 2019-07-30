@@ -1,19 +1,20 @@
 import React from 'react'
 import Enzyme,{shallow} from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
-import {createStore} from 'redux'
+import {applyMiddleware, createStore} from 'redux'
 
 import {findByTestAttr} from "../testUtils/testUtils"
 import Input from './Input'
 import {rootReducer} from '../index'
+import ReduxThunk from "redux-thunk";
 
 
 Enzyme.configure({adapter: new EnzymeAdapter()});
 ///////////////////////////Necessary when testing component that uses Redux's "connect()()"/////////////////////////////
 const setup=(initialState={})=>{
 
-    const store=createStore(rootReducer, initialState);
-
+    //const store=createStore(rootReducer, initialState);
+    const store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk));
 
     //Need to do this for a component with Redux
     const wrapper=shallow(<Input store={store}/>).dive().dive();//we needed "dive()" to see access the child component of the HOC of Redux whice is the <Input /> it self. one more "dive()" took inside the <Input />. with 2 "dive()" we will get to the wrapper comp of Redux only
@@ -70,6 +71,16 @@ describe('render', ()=>{
 
 });
 
-describe('update state', ()=>{
-
+describe('redux props', ()=>{
+    test('has success piece of state as props', ()=>{
+       const successReducer=false;
+       const wrapper=setup({successReducer});
+       const successProp=wrapper.instance().props.success;// as we named the successReducer as "success" while accessing it from redux in "Input.js"
+       expect(successProp).toBe(successReducer);
+    });
+    test('`guessWord()` action creator is a function prop', ()=>{
+       const wrapper=setup();
+       const guessWord=wrapper.instance().props.guessWord;
+       expect(guessWord).toBeInstanceOf(Function);
+    });
 });

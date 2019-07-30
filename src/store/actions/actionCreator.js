@@ -1,3 +1,4 @@
+import axios from 'axios'
 import actionTypes from './actionTypeNames'
 
 /*
@@ -7,7 +8,7 @@ export const correctGuess=()=>{
     }
 };
 */
-
+//////////////////////////////////////////Helper Function//////////////////////////////////////////////////
 export const getLetterMatchCount=(guessedWord, secretWord)=>{
 
     const guessedLetterSet=new Set(guessedWord.split(''));
@@ -15,6 +16,10 @@ export const getLetterMatchCount=(guessedWord, secretWord)=>{
                                                  //The has() method returns a boolean indicating whether an element with the specified key exists or not.
     return [...secretLetterSet].filter(letter=>guessedLetterSet.has(letter)).length;// It will return the length of an array that only contains the letters from "secretLetterSet" that matches with the letters of "guessedLetterSet"
 };
+//////////////////////////////////////////Helper Function//////////////////////////////////////////////////
+
+
+
 
 export const guessWord=(guessedWord)=>{
 
@@ -36,11 +41,21 @@ const guessWordAction=(guessedWord, letterMatchCount)=>{
         payload:{guessedWord, letterMatchCount}
     }
 };
-
 const successReducerAction=()=>{
     return {
         type:actionTypes.CORRECT_GUESS
     }
 };
+
+export const getSecretWord=()=>{
+    return (dispatch)=>{
+        return axios.get('').then((response)=>{
+            dispatch({type:actionTypes.SET_SECRET_WORD, payload:response.data})
+        })
+    }
+};
+
+
+
 
 

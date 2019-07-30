@@ -18,13 +18,13 @@ describe('guess word action dispatcher', ()=>{
       beforeEach(()=>{
           //const createStoreWithMiddleware=applyMiddleware(ReduxThunk)(createStore);
           //store=createStoreWithMiddleware(rootReducer, initialState);
-          store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk))
+          store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk));//When we use the reducers itself to represent each state properties then we must set an initial state like this
       });
 
       test('update state correctly for unsuccessful guess', ()=>{
           store.dispatch(guessWord(unsuccessfulGuess));
           const expectedState={
-              ...initialState,
+              ...initialState,//value of the "secretWordReducer"
               successReducer:false,
               guessWordReducer:[{
                   guessedWord:unsuccessfulGuess,
@@ -37,7 +37,7 @@ describe('guess word action dispatcher', ()=>{
       test('update state correctly for successful guess', ()=>{
          store.dispatch(guessWord(secretWordReducer));
          const expectedState={
-            ...initialState,
+            ...initialState,//value of the "secretWordReducer"
             successReducer:true,
             guessWordReducer: [{
                 guessedWord:secretWordReducer,
@@ -62,14 +62,15 @@ describe('guess word action dispatcher', ()=>{
       test('update state correctly for unsuccessful guess', ()=>{
           store.dispatch(guessWord(unsuccessfulGuess));
           const expectedState={
-              secretWordReducer,
+              secretWordReducer,//Same as ...initialState,
               successReducer:false,
               guessWordReducer:[
                   ...guessWordReducer,
                   {
                       guessedWord:unsuccessfulGuess,
                       letterMatchCount:3
-                  }]
+                  }
+              ]
           };
           const newState=store.getState();
           expect(newState).toEqual(expectedState);
@@ -77,7 +78,7 @@ describe('guess word action dispatcher', ()=>{
       test('update state correctly for successful guess', ()=>{
           store.dispatch(guessWord(secretWordReducer));
           const expectedState={
-              secretWordReducer,
+              ...initialState,//secretWordReducer,
               successReducer:true,
               guessWordReducer:[
                   ...guessWordReducer,
@@ -87,7 +88,7 @@ describe('guess word action dispatcher', ()=>{
                   }
               ]
           };
-          const newState=store.getState()
+          const newState=store.getState();
           expect(newState).toEqual(expectedState);
       });
    });

@@ -1,5 +1,10 @@
+import moxios from 'moxios'
+import {createStore, applyMiddleware} from 'redux'
+import ReduxThunk from 'redux-thunk'
+
 import actionTypes from './actionTypeNames'
-import {correctGuess, getLetterMatchCount} from './actionCreator'
+import {correctGuess, getLetterMatchCount, getSecretWord} from './actionCreator'
+import {rootReducer} from '../../index'
 
 /*
 describe('correct guess', ()=>{
@@ -9,7 +14,7 @@ describe('correct guess', ()=>{
     });
 });
 */
-
+/////////////////////////////////////To test the helper function//////////////////////////////////////////////////////
 describe('getLetterMatchCount', ()=>{
     const secretWord='party';
     test('returns correct count when there are no matching letters', ()=>{
@@ -25,3 +30,35 @@ describe('getLetterMatchCount', ()=>{
         expect(letterMatchCount).toBe(3);
     });
 });
+/////////////////////////////////////To test the helper function//////////////////////////////////////////////////////
+
+///////////////////////////////////////To test Action creators////////////////////////////////////////////////////////
+describe('getSecretWord action creator', ()=>{
+    beforeEach(()=>{
+       moxios.install();
+    });
+    afterEach(()=>{
+       moxios.uninstall();
+    });
+
+    test('adds response words to state', ()=>{
+        const secretWordReducer='party';
+        const store=createStore(rootReducer, secretWordReducer, applyMiddleware(ReduxThunk));
+
+        //This wait() tells how to response when axios sence a request
+        moxios.wait(()=>{
+            const request=moxios.requests.mostRecent();//take the last request
+            request.respondWith({ //create a response for the request
+                status:200,
+                response:secretWordReducer
+            });
+
+            return store.dispatch(getSecretWord()).then(()=>{
+                const newState=store.getState();
+                expect(newState.secretWordReducer).toBe(secretWordReducer);
+            });
+        });
+    });
+});
+
+

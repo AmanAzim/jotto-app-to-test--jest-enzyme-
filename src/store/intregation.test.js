@@ -1,7 +1,6 @@
-import {shallow} from 'enzyme'
-import {findByTestAttr} from '../testUtils/testUtils'
+import ReduxThunk from 'redux-thunk'
 import {rootReducer} from '../index'
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
 
 import {guessWord} from './actions/actionCreator'
 
@@ -17,7 +16,9 @@ describe('guess word action dispatcher', ()=>{
       let store;
       const initialState={secretWordReducer};
       beforeEach(()=>{
-          store=createStore(rootReducer, initialState);
+          //const createStoreWithMiddleware=applyMiddleware(ReduxThunk)(createStore);
+          //store=createStoreWithMiddleware(rootReducer, initialState);
+          store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk))
       });
 
       test('update state correctly for unsuccessful guess', ()=>{
@@ -26,7 +27,7 @@ describe('guess word action dispatcher', ()=>{
               ...initialState,
               successReducer:false,
               guessWordReducer:[{
-                  guessedWords:unsuccessfulGuess,
+                  guessedWord:unsuccessfulGuess,
                   letterMatchCount:3
               }]
           };
@@ -39,7 +40,7 @@ describe('guess word action dispatcher', ()=>{
             ...initialState,
             successReducer:true,
             guessWordReducer: [{
-                guessedWords:secretWordReducer,
+                guessedWord:secretWordReducer,
                 letterMatchCount:5
             }]
          };
@@ -51,11 +52,11 @@ describe('guess word action dispatcher', ()=>{
 
 
    describe('some guess word', ()=>{
-      const guessWordReducer=[{guessedWords:'agile', letterMatchCount:1}];
+      const guessWordReducer=[{guessedWord:'agile', letterMatchCount:1}];
       const initialState={guessWordReducer, secretWordReducer};
       let store;
       beforeEach(()=>{
-          store=createStore(rootReducer, initialState);
+          store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk));
       });
 
       test('update state correctly for unsuccessful guess', ()=>{
@@ -66,7 +67,7 @@ describe('guess word action dispatcher', ()=>{
               guessWordReducer:[
                   ...guessWordReducer,
                   {
-                      guessedWords:unsuccessfulGuess,
+                      guessedWord:unsuccessfulGuess,
                       letterMatchCount:3
                   }]
           };
@@ -81,7 +82,7 @@ describe('guess word action dispatcher', ()=>{
               guessWordReducer:[
                   ...guessWordReducer,
                   {
-                      guessedWords:secretWordReducer,
+                      guessedWord:secretWordReducer,
                       letterMatchCount:5
                   }
               ]

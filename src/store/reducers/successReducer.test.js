@@ -1,4 +1,4 @@
-import actionTypes from './actions/actionTypeNames'
+import actionTypes from '../actions/actionTypeNames'
 import successReducer from './successReducer'
 
 

@@ -1,4 +1,4 @@
-import actionTypes from './actions/actionTypeNames'
+import actionTypes from '../actions/actionTypeNames'
 
 
 const successReducer=(state=false, action)=>{

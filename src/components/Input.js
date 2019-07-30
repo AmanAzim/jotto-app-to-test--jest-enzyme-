@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import successReducer from "../store/successReducer";
+import successReducer from "../store/reducers/successReducer";
 
 class Input extends Component {
 

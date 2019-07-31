@@ -47,6 +47,7 @@ describe('redux properties', ()=>{
      });
 });
 
+//https://stackoverflow.com/questions/56077108/testing-a-component-that-uses-react-useeffect-using-enzyme
 test('`getSecretWord` runs on App mount (only if App is a Class based component this test will pass)', ()=>{
     const getSecretWordMock=jest.fn();//Now jest will watch when this "getSecretWordMock" is called and how
 

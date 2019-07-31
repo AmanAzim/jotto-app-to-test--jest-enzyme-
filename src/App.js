@@ -7,7 +7,7 @@ import Congrats from './components/Congrats'
 import GuessedWords from './components/GuessedWords'
 import Input from './components/Input'
 import {guessWord, getSecretWord} from "./store/actions/actionCreator";
-import secretWordReducer from "./store/reducers/secretWordReducer";
+
 
 
 
@@ -23,7 +23,6 @@ export const UnconnectedApp=(props)=>{
       <div className="container">
           <h1>Jotto</h1>
           <Congrats success={success}/>
-          <Input />
           <GuessedWords guessedWords={guessedWords}/>
       </div>
   );

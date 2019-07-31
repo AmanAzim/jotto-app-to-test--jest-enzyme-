@@ -4,7 +4,7 @@ import EnzymeAdapter from 'enzyme-adapter-react-16';
 import {applyMiddleware, createStore} from 'redux'
 
 import {findByTestAttr} from "../testUtils/testUtils"
-import Input from './Input'
+import Input,{Input as UnconnectedInput} from './Input'
 import {rootReducer} from '../index'
 import ReduxThunk from "redux-thunk";
 
@@ -71,6 +71,7 @@ describe('render', ()=>{
 
 });
 
+
 describe('redux props', ()=>{
     test('has success piece of state as props', ()=>{
        const successReducer=false;
@@ -82,5 +83,34 @@ describe('redux props', ()=>{
        const wrapper=setup();
        const guessWord=wrapper.instance().props.guessWord;
        expect(guessWord).toBeInstanceOf(Function);
+    });
+});
+
+
+describe('`guessWord` action creator calls', ()=>{
+    let guessWordMock;
+    let wrapper;
+
+    beforeEach(()=>{
+        guessWordMock=jest.fn();//the mock function
+        const props={guessWord:guessWordMock, success:false};
+
+        wrapper=shallow(<UnconnectedInput {...props}/>);
+
+        //Add value to input box/field
+        wrapper.instance().inputBox.current='train';
+
+        const submitBtn=wrapper.find("[data-test='submit-btn']");
+        submitBtn.simulate('click', { preventDefault(){} } ); //we need to set this "preventDefault()" so that the test can find it as we are also using it in the real "onSubmit" function
+    });
+
+    test('guessWord runs on clicking the submit button', ()=>{
+        const guessWordMockCallCount=guessWordMock.mock.calls.length;
+        expect(guessWordMockCallCount).toBe(1);
+    });
+
+    test('call `guessWord` with input value as argumenyt', ()=>{
+        const guessWordArg=guessWordMock.mock.calls[0][0]; //as each argument passed to the mock function lives in a 2 dimentional array of structure [['arg1', 3], ['arg2', 5]]
+        expect(guessWordArg).toBe('train')
     });
 });

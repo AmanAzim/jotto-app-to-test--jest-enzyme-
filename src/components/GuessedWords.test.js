@@ -63,4 +63,8 @@ describe('if there are words guessed', ()=>{
         const eachGuessedWordNode=findByTestAttr(wrapper, 'each-guessed-word');
         expect(eachGuessedWordNode.length).toBe(guessedWords.length); //the number of guessed is exact as received from parent as props.
     });
+    test('render number of gusses', ()=>{
+       const guessCount=findByTestAttr(wrapper, 'guess-count');
+       expect(guessCount.text()).toContain(3);
+    });
 });

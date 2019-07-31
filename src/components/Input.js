@@ -13,10 +13,12 @@ export class Input extends Component {
     onSubmit=(event)=>{
         event.preventDefault();
 
-        const inputValue=this.inputBox.current;
+        const inputValue=this.inputBox.current.value;
         if(inputValue && inputValue.length>0){
-           this.props.guessWord(inputValue) ;
+           this.props.guessWord(inputValue);
         }
+
+        this.inputBox.current.value='';
     };
 
     render() {

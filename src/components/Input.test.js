@@ -98,7 +98,7 @@ describe('`guessWord` action creator calls', ()=>{
         wrapper=shallow(<UnconnectedInput {...props}/>);
 
         //Add value to input box/field
-        wrapper.instance().inputBox.current='train';
+        wrapper.instance().inputBox.current={value:'train'};
 
         const submitBtn=wrapper.find("[data-test='submit-btn']");
         submitBtn.simulate('click', { preventDefault(){} } ); //we need to set this "preventDefault()" so that the test can find it as we are also using it in the real "onSubmit" function
@@ -112,5 +112,9 @@ describe('`guessWord` action creator calls', ()=>{
     test('call `guessWord` with input value as argumenyt', ()=>{
         const guessWordArg=guessWordMock.mock.calls[0][0]; //as each argument passed to the mock function lives in a 2 dimentional array of structure [['arg1', 3], ['arg2', 5]]
         expect(guessWordArg).toBe('train')
+    });
+
+    test('inputBox clears on submit', ()=>{
+       expect(wrapper.instance().inputBox.current.value).toBe('');
     });
 });

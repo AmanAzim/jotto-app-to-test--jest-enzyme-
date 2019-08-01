@@ -54,8 +54,9 @@ describe('`New word` button functionalities', ()=>{
         expect(resetBtn.exists()).toBe(true);
     });
     test('reset all the states on clicking button `New word`', ()=>{
-        //resetBtn.simulate('click');
+         resetBtn.simulate('click');
         //expect(wrapper.instance().props.success).toBe(true)//If <Congrats /> would be a class based component
-           expect(wrapper).toBe(true)
+        //expect(wrapper).toBe(false);
     });
+
 });

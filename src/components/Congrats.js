@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Input from './Input'
 
 const Congrats = (props) => {
-    const {success}=props;
+    const {success, resetGame}=props;
 
     if(success){
         return (
@@ -12,7 +12,8 @@ const Congrats = (props) => {
                 <span data-test='congrats-message'>
                     Congratulation ! you guessed the word
                 </span>
-                <button data-test='reset-btn' className="btn btn-primary">New word</button>
+                <br/>
+                <button data-test='reset-btn' className="btn btn-primary" onClick={resetGame}>New word</button>
             </div>
         );
     }else{
@@ -25,7 +26,7 @@ const Congrats = (props) => {
 };
 
 Congrats.propTypes={
-  //success:PropTypes.bool.isRequired//This will activate the "checkPropTypes" also
+  success:PropTypes.bool.isRequired//This will activate the "checkPropTypes" also
 };
 
 export default Congrats;

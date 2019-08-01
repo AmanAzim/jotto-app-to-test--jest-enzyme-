@@ -55,6 +55,15 @@ export const getSecretWord=()=>{
     }
 };
 
+export const resetGame=()=>{
+    return (dispatch)=>{
+        dispatch({type:actionTypes.RESET_GAME});//this will reset seccessReducer and guessWordReducer
+
+        return axios.get('').then(res=>{//this will reset secretWordReducer by fetching a new word from server to guess
+            dispatch({type:actionTypes.SET_SECRET_WORD, payload:res.data});
+        });
+    }
+};
 
 
 

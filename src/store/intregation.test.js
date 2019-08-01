@@ -2,7 +2,7 @@ import ReduxThunk from 'redux-thunk'
 import {rootReducer} from '../index'
 import {createStore, applyMiddleware} from 'redux'
 
-import {guessWord} from './actions/actionCreator'
+import {guessWord, resetGame} from './actions/actionCreator'
 
 
 
@@ -91,5 +91,21 @@ describe('guess word action dispatcher', ()=>{
           const newState=store.getState();
           expect(newState).toEqual(expectedState);
       });
+   });
+
+   test('reset the state on action creator `resetGame`', ()=>{
+       const secretWordReducer='party';
+       const guessWordReducer=[{guessedWord:'agile', letterMatchCount:1}];
+       const initialState={secretWordReducer, guessWordReducer};
+       const store=createStore(rootReducer, initialState, applyMiddleware(ReduxThunk));
+
+       store.dispatch(resetGame());
+
+       const expectedState={
+           secretWordReducer:'party',
+           successReducer:false,
+           guessWordReducer:[]
+       };
+       expect(store.getState()).toEqual(expectedState);
    });
 });

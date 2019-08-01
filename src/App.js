@@ -6,14 +6,15 @@ import {connect} from 'react-redux'
 import Congrats from './components/Congrats'
 import GuessedWords from './components/GuessedWords'
 import Input from './components/Input'
-import {guessWord, getSecretWord} from "./store/actions/actionCreator";
+import {guessWord, getSecretWord, resetGame} from "./store/actions/actionCreator";
 
 
 
 
 
 export const UnconnectedApp=(props)=>{
-  const {success, guessedWords, secretWord, getSecretWord}=props;
+
+  const {success, guessedWords, secretWord, getSecretWord, resetGame}=props;
 
   useEffect(()=>{
       getSecretWord();
@@ -23,7 +24,7 @@ export const UnconnectedApp=(props)=>{
       <div className="container">
           <h1>Jotto</h1>
           <div>The secret word is {secretWord}</div>
-          <Congrats success={success}/>
+          <Congrats success={success} resetGame={resetGame}/>
           <GuessedWords guessedWords={guessedWords}/>
       </div>
   );
@@ -39,7 +40,8 @@ const mapStateToProps=(state)=>{
 };
 const mapDispatchToProps=(dispatch)=>{
     return {
-        getSecretWord:()=>dispatch(getSecretWord())
+        getSecretWord:()=>dispatch(getSecretWord()),
+        resetGame:()=>dispatch(resetGame())
     }
 };
 

@@ -27,6 +27,7 @@ export class Input extends Component {
             <form className="form-inline">
                 <input data-test='input-box' ref={this.inputBox} id="word-guess" type="text" className="mb-2 mx-sm-3" placeholder="Enter guess" />
                 <button data-test='submit-btn' type="submit" className="btn btn-primary" onClick={this.onSubmit}>Submit</button>
+
             </form>
         );
 

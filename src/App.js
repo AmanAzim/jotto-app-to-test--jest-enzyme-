@@ -23,7 +23,6 @@ export const UnconnectedApp=(props)=>{
   return (
       <div className="container">
           <h1>Jotto</h1>
-          <div>The secret word is {secretWord}</div>
           <Congrats success={success} resetGame={resetGame}/>
           <GuessedWords guessedWords={guessedWords}/>
       </div>

@@ -118,3 +118,21 @@ describe('`guessWord` action creator calls', ()=>{
        expect(wrapper.instance().inputBox.current.value).toBe('');
     });
 });
+
+
+
+describe('give up button', ()=>{
+    let wrapper;
+    let giveUpBtn;
+    beforeEach(()=>{
+       const props={
+            guessWordsCount:1
+       };
+       wrapper=shallow(<UnconnectedInput {...props}/>);
+       giveUpBtn=wrapper.find("[data-test='giveup-btn']");
+    });
+
+    test('`Give up` button if `guessWordsCount` prop is more than 0', ()=>{
+       expect(giveUpBtn.length).toBe(1);
+    });
+});

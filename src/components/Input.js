@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
 import successReducer from "../store/reducers/successReducer";
-import {guessWord} from '../store/actions/actionCreator'
+import {guessWord, resetGame} from '../store/actions/actionCreator'
+import guessWordReducer from "../store/reducers/guessWordReducer";
 
 export class Input extends Component {
 
@@ -27,7 +28,9 @@ export class Input extends Component {
             <form className="form-inline">
                 <input data-test='input-box' ref={this.inputBox} id="word-guess" type="text" className="mb-2 mx-sm-3" placeholder="Enter guess" />
                 <button data-test='submit-btn' type="submit" className="btn btn-primary" onClick={this.onSubmit}>Submit</button>
-
+                {this.props.guessWordsCount>0?
+                    <button data-test='giveup-btn' type="submit" className="btn btn-danger" onClick={null}>Give up</button> : null
+                }
             </form>
         );
 
@@ -41,12 +44,14 @@ export class Input extends Component {
 
 const mapStateToProps=(state)=>{
     return {
-        success:state.successReducer
+        success:state.successReducer,
+        guessWordsCount:state.guessWordReducer.length
     }
 };
 const mapDispatchToProps=(dispatch)=>{
     return {
-        guessWord:(value)=>dispatch(guessWord(value))
+        guessWord:(value)=>dispatch(guessWord(value)),
+        onGiveUp:()=>dispatch(resetGame(), )
     }
 };
 

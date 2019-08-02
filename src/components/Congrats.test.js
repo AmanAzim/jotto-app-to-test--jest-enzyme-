@@ -1,9 +1,9 @@
 import React from 'react';
-import Enzyme,{shallow, render} from 'enzyme';
+import Enzyme,{shallow, render, mount} from 'enzyme';
 import EnzymeAdapter from 'enzyme-adapter-react-16';
 import {findByTestAttr, checkProps} from '../testUtils/testUtils'
 import checkPropTypes from 'check-prop-types'
-import Congrats,{Congrats as UnconnectedCongrats} from './Congrats'
+import Congrats from './Congrats'
 
 Enzyme.configure({adapter: new EnzymeAdapter()}); //We dont need to write these here any more because we have put them in "setupTests.js" which runs before any test
 
@@ -54,9 +54,14 @@ describe('`New word` button functionalities', ()=>{
         expect(resetBtn.exists()).toBe(true);
     });
     test('reset all the states on clicking button `New word`', ()=>{
-         resetBtn.simulate('click');
+        const wrapper=mount(<Congrats success={true} />);//Needed only to access the props of a Functional component
+
+        //let resetBtn=wrapper.find("[data-test='reset-btn']");
+        //resetBtn.simulate('click');// This click will not have any effect as the onClick handler function is coming from props passed by parent thus cannot be used in test
+
         //expect(wrapper.instance().props.success).toBe(true)//If <Congrats /> would be a class based component
         //expect(wrapper).toBe(false);
+        expect(wrapper.props().success).toBe(true)
     });
 
 });
